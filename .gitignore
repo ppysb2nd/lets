@@ -1,0 +1,14 @@
+**/__pycache__
+**/build
+config.ini
+.data
+run.sh
+*.c
+*.so
+*.log
+common
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/lets.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
