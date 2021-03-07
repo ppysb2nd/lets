@@ -68,8 +68,8 @@ def make_app():
         (r"/web/replays/(.+)", getFullReplayHandler.handler),
         (r"/p/changelog", changelogHandler.handler),
 
-        (r"/p/verify", redirectHandler.handler, dict(destination="https://akatsuki.pw/index.php?p=2")),
-        (r"/u/(.+)", redirectHandler.handler, dict(destination="https://akatsuki.pw/u/{}")),
+        (r"/p/verify", redirectHandler.handler, dict(destination="https://osu.ppy.sb/index.php?p=2")),
+        (r"/u/(.+)", redirectHandler.handler, dict(destination="https://osu.ppy.sb/u/{}")),
 
         (r"/(lets)?api/v1/status", apiStatusHandler.handler),
         (r"/(lets)?api/v1/pp", apiPPHandler.handler),
