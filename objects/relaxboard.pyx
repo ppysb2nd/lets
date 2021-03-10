@@ -57,10 +57,13 @@ class scoreboard:
             friends = "AND (scores_relax.userid IN (SELECT user2 FROM users_relationships WHERE user1 = %(userid)s) OR scores_relax.userid = %(userid)s)"
 
         # Sort and limit at the end
-        if self.beatmap.rankedStatus in [rankedStatuses.LOVED, rankedStatuses.PENDING]:
-            order = "ORDER BY score DESC"
-        else:
-            order = "ORDER BY pp DESC"
+        # if self.beatmap.rankedStatus in [rankedStatuses.LOVED, rankedStatuses.PENDING]:
+        #     order = "ORDER BY score DESC"
+        # else:
+        #     order = "ORDER BY pp DESC"
+
+        # 只按 pp 排序获取
+        order = "ORDER BY pp DESC"
 
         limit = "LIMIT 1"
 
@@ -127,7 +130,8 @@ class scoreboard:
         else:
             friends = ""
 
-        order = "ORDER BY score DESC"
+        # std 使用 pp 排行，其他 mode 使用 score 排行
+        order = "ORDER BY pp DESC" if self.gameMode == 1 else "ORDER BY score DESC"
 
         if userUtils.getPrivileges(self.userID) & privileges.USER_PREMIUM: # Premium members can see up to 75 scores on leaderboards
             limit = "LIMIT 75"
@@ -252,11 +256,15 @@ class scoreboard:
         if self.friends:
             query.append("AND (scores_relax.userid IN (SELECT user2 FROM users_relationships WHERE user1 = %(userid)s) OR scores_relax.userid = %(userid)s)")
 
-        # Sort and limit at the end
-        if self.beatmap.rankedStatus in [rankedStatuses.LOVED, rankedStatuses.PENDING]:
-            query.append("ORDER BY score DESC LIMIT 1;")
-        else:
-            query.append("ORDER BY pp DESC LIMIT 1;")
+        # # Sort and limit at the end
+        # if self.beatmap.rankedStatus in [rankedStatuses.LOVED, rankedStatuses.PENDING]:
+        #     query.append("ORDER BY score DESC LIMIT 1;")
+        # else:
+        #     query.append("ORDER BY pp DESC LIMIT 1;")
+
+        # 只按 pp 排序获取
+        query.append("ORDER BY pp DESC LIMIT 1;")
+
 
         result = glob.db.fetch(' '.join(query), {"md5": self.beatmap.fileMD5, "userid": self.userID, "mode": self.gameMode, "mods": self.mods})
         if result is not None: self.personalBestRank = result["rank"]
