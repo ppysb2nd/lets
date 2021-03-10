@@ -131,7 +131,7 @@ class scoreboard:
             friends = ""
 
         # std 使用 pp 排行，其他 mode 使用 score 排行
-        order = "ORDER BY pp DESC" if self.gameMode == 1 else "ORDER BY score DESC"
+        order = "ORDER BY pp DESC" if self.gameMode == 0 else "ORDER BY score DESC"
 
         if userUtils.getPrivileges(self.userID) & privileges.USER_PREMIUM: # Premium members can see up to 75 scores on leaderboards
             limit = "LIMIT 75"
