@@ -132,8 +132,12 @@ class oppai:
                 # acc is set for each subprocess if calculating tillerino-like pp sets
                 if self.acc > 0:
                     command += " {acc:.2f}%".format(acc=self.acc)
-            if self.mods > 0:
+            # 不是只有 TD
+            notSingleTD = not (self.mods == 4)
+            if self.mods > 0 and notSingleTD:
                 command += " +{mods}".format(mods=scoreUtils.readableMods(modsFixed))
+                # 去除 TD nerf
+                command = command.replace("TD", "")
             if self.combo > 0:
                 command += " {combo}x".format(combo=self.combo)
             if self.misses > 0:
@@ -169,10 +173,6 @@ class oppai:
                 elif self.beatmap.beatmapID == 1517355: # Marisa wa Taihen.. [YOLO]
                     temp_pp *= 0.65
 
-                # 几乎完全削除 TD pp
-                if self.mods & mods.TOUCHSCREEN:
-                    temp_pp *= 0.0001
-
                 self.pp = temp_pp
             else:
                 pp_list = []
@@ -205,10 +205,6 @@ class oppai:
 
                     elif self.beatmap.beatmapID == 1517355: # Marisa wa Taihen.. [YOLO]
                         pp *= 0.65
-
-                    # 几乎完全削除 TD pp
-                    if self.mods & mods.TOUCHSCREEN:
-                        pp *= 0.0001
 
                     pp_list.append(pp)
                 self.pp = pp_list
