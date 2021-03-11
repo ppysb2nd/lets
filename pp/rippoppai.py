@@ -168,6 +168,11 @@ class oppai:
                         ]: temp_pp *= 0.90
                 elif self.beatmap.beatmapID == 1517355: # Marisa wa Taihen.. [YOLO]
                     temp_pp *= 0.65
+
+                # 几乎完全削除 TD pp
+                if self.mods & mods.TOUCHSCREEN:
+                    temp_pp *= 0.0001
+
                 self.pp = temp_pp
             else:
                 pp_list = []
@@ -200,6 +205,10 @@ class oppai:
 
                     elif self.beatmap.beatmapID == 1517355: # Marisa wa Taihen.. [YOLO]
                         pp *= 0.65
+
+                    # 几乎完全削除 TD pp
+                    if self.mods & mods.TOUCHSCREEN:
+                        pp *= 0.0001
 
                     pp_list.append(pp)
                 self.pp = pp_list
